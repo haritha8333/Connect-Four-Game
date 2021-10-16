@@ -4,9 +4,9 @@ var player1color = 'rgb(244, 65, 65)';
 var player2color = 'rgb(66, 134, 244)';
 
 
-const startBtn= document.getElementById("start");
-const nameInput= document.getElementById('nameInput')
-let playtTime = document.getElementById("timeforplay")
+const startBtn = document.getElementById("start");
+const nameInput = document.getElementById('nameInput');
+let playtTime = document.getElementById("timeforplay");
 
 var timer;
 var timeLeft;
@@ -45,6 +45,15 @@ function makeMove(){
     }
 }
 
+function resetOnGameEnd(){
+      $('h3').fadeOut('fast');
+      $('#instruct').fadeOut('fast');
+      clearInterval(timer);
+      document.getElementById("timer-wrap").style.display = "none";
+      $('.winner').text(`Congrats ${currentName}, you win!`);
+      document.getElementById("game-over").style.display = "block";
+}
+
 async function namesInput(){
   const nameInput=await document.getElementById('nameInput')
   nameInput.style.display="none";
@@ -77,11 +86,7 @@ async function namesInput(){
   	changeColor(bottomAvail, col, currentColor);
 
   	if(horizontalWinCheck() || verticalWinCheck() || diagonalWinCheck()){
-  		$('h1').text(currentName + " You have won!");
-  		$('h3').fadeOut('fast');
-  		$('h2').fadeOut('fast');
-      clearInterval(timer);
-      document.getElementById("timer-wrap").style.display = "none";
+  		resetOnGameEnd();
   	}
 
   	makeMove();
